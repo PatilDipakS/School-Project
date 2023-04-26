@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Log In Page</title>
+
+	<!-- Google Font: Source Sans Pro -->
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="admin/plugins/fontawesome-free/css/all.min.css">
+	<!-- icheck bootstrap -->
+	<link rel="stylesheet" href="admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="admin/dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition login-page">
+	<div class="login-box">
+		<!-- /.login-logo -->
+		<div class="card">
+			<div class="card-header text-center text-light" style="background-color:#2596be;">
+				<a href="#" class="h2"><b>Log In</b></a>
+			</div>
+			<div class="card-body ">
+				<p class="login-box-msg text-danger"><b>PLEASE ENTER YOUR <br> EMAIL AND PASSWORD</b></p>
+				
+				<form th:action="@{/valid-LogIn-API}" method="post">
+					<div class="input-group mb-3">
+						<input type="email" class="form-control" placeholder="Email" name="email">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<i class="fas fa-envelope"></i>
+							</div>
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<input type="password" id="password" class="form-control" placeholder="Password"
+							name="password">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<i class="fas fa-eye" id="togglePassword"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-4">
+						<button type="submit" class="btn btn-block text-light" style="background-color:#2596be;">Log
+							In</button>
+					</div>
+					<!-- /.col -->
+				</form>
+
+			</div>
+			<!-- /.card-body -->
+		</div>
+		<!-- /.card -->
+	</div>
+	<!-- /.login-box -->
+
+	<!-- jQuery -->
+	<script src="admin/plugins/jquery/jquery.min.js"></script>
+	<!-- Bootstrap 4 -->
+	<script src="admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="admin/dist/js/adminlte.min.js"></script>
+
+	<script>
+
+		const togglePassword = document.querySelector('#togglePassword');
+		const password = document.querySelector('#password');
+
+		togglePassword.addEventListener('click', function (e) {
+			// toggle the type attribute
+			const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+			password.setAttribute('type', type);
+			// toggle the icon
+			this.classList.toggle('fa-eye-slash');
+		});
+	</script>
+</body>
+
+</html>

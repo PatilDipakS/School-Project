@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>STAFF REGISTRATION DETAILS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="showStaffDetails();" class="hold-transition sidebar-mini layout-fixed"
+	data-panel-auto-height-mode="height">
+	<!-- start nav bar-->
+	<div class="wrapper">
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h3><b>STAFF REGISTRATION DETAILS</b></h3>
+						</div>
+						
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header" style="background-color:#2596be;">
+									<div class="card-title">
+									</div>
+									<div>
+										<button type="submit" class="btn btn-light" data-toggle="modal"
+											data-target="#add-Staff-Modal"
+											onclick="staffRole(); staffDesignation();">NEW STAFF REGISTRATION</button>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body text-light" style="background-color:#2596be;">
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Staff Id</th>
+												<th class="table-active">Name</th>
+												<th class="table-active">Email</th>
+												<th class="table-active">Mobile</th>
+												<th class="table-active">Role</th>
+												<th class="table-active">Designation</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+		<!--AddStaff Model Start-->
+		<div class="modal fade" id="add-Staff-Modal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content text-light" style="background-color:#2596be;">
+
+					<!--modal header -->
+					<div class="modal-header">
+						<h4 class="modal-title text-center w-100"><b>NEW STAFF REGISTRATION<b></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!--/-modal header -->
+
+					<!-- Modal form start -->
+					<form id="add-Staff">
+						<div class="card-body">
+							<!-- card-body-row -->
+							<div class="row">
+
+								<!-- card-body-col-1 -->
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleInputID">Name</label>
+										<input type="text" class="form-control" placeholder="Enter Full Name"
+											name="name" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputEmail1">Email</label>
+										<input type="email" class="form-control" placeholder="Enter email" name="email"
+											required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Address</label>
+										<input type="text" class="form-control" placeholder="Enter Address"
+											name="address" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Qualification</label>
+										<input type="text" class="form-control" placeholder="Enter Qualification"
+											name="qualification" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleSelectBorder">Role</label>
+										<select class="custom-select rounded-0" id="role1" name="role" required>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Last Work Experience</label>
+										<input type="text" class="form-control" placeholder="Enter Last Work Experience"
+											name="lastWorkExpe" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Joinning Date</label>
+										<input type="date" class="form-control" placeholder="Enter Joinning Date"
+											name="joinDate" required>
+									</div>
+
+								</div>
+								<!-- /-card-body-col-1 -->
+
+								<!-- card-body-col-2 -->
+								<div class="col-md-6">
+
+									<div class="form-group">
+										<label for="exampleInputID">Number</label>
+										<input type="text" class="form-control" placeholder="Enter Mobile Number"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+											maxlength="10" minlength="10" name="mobile" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputPassword1">Password</label>
+										<input type="password" class="form-control" placeholder="Password"
+											pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}"
+											title="Must contain at least one number and one uppercase and lowercase letter, and at least 4 or more characters"
+											name="password" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputEmail1">Birth Date</label>
+										<input type="date" class="form-control" placeholder="Enter birthday date"
+											name="birth" required>
+									</div>
+
+									<div class="form-group">
+										<label>Gender</label>
+										<select class="custom-select rounded-0" name="gender" required>
+											<option disabled selected> -- Select Gender -- </option>
+											<option>Male</option>
+											<option>Female</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputFile">Documents</label>
+										<div class="input-group">
+											<div class="custom-file">
+												<input type="file" class="custom-file-input" name="documents" required>
+												<label class="custom-file-label" for="exampleInputFile">Choose
+													file</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleSelectBorder">Designation</label>
+										<select class="custom-select rounded-0" id="designation1" name="designation"
+											required>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Work Experience in Number</label>
+										<input type="text" pattern="[0-9]{2}" class="form-control"
+											placeholder="Enter Work Experience in Number" name="workExpNum" required>
+									</div>
+
+								</div>
+								<!-- /-card-body-col-2 -->
+
+							</div>
+							<!-- /.card-body-row -->
+						</div>
+						<!-- /.card-body -->
+
+						<div class="modal-footer">
+							<button type="Reset" class="btn btn-warning">Reset</button>
+							<button type="button" class="btn btn-warning" data-dismiss="modal"
+								aria-label="Close">Close</button>
+							<button type="submit" class="btn btn-warning">Save</button>
+						</div>
+					</form>
+					<!-- /-Modal form -->
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--AddStaff Modal End-->
+
+
+
+		<!--Edit Staff Model Start-->
+		<div class="modal fade" id="edit-staff-Modal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content text-light" style="background-color:#2596be;">
+
+					<!--modal header -->
+					<div class="modal-header">
+						<h3 class="modal-title text-center w-100"><b>EDIT STAFF REGISTRATION</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!--/-modal header -->
+
+					<!-- Modal form start -->
+					<form id="update">
+						<div class="card-body">
+							<!-- card-body-row -->
+							<div class="row">
+
+								<!-- card-body-col-1 -->
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleInputID">Name</label>
+										<input type="text" class="form-control" id="name1" placeholder="Enter Full Name"
+											name="name" required>
+
+										<input type="hidden" class="form-control" id="id1" placeholder="Enter Full Name"
+											name="id" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputEmail1">Email</label>
+										<input type="email" class="form-control" id="email1" placeholder="Enter email"
+											name="email" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Address</label>
+										<input type="text" class="form-control" id="address1"
+											placeholder="Enter Address" name="address" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Qulification</label>
+										<input type="text" class="form-control" id="qualification1"
+											placeholder="Enter Qulification" name="qualification" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleSelectBorder">Role</label>
+										<select class="custom-select rounded-0" id="role2" name="role" required>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Last Work Experience</label>
+										<input type="text" class="form-control" id="lastWorkExpe1"
+											placeholder="Enter Last Work Experience" name="lastWorkExpe" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Joinning Date</label>
+										<input type="date" class="form-control" id="joinDate1"
+											placeholder="Enter Joinning Date" name="joinDate" required>
+									</div>
+
+								</div>
+								<!-- /-card-body-col-1 -->
+
+								<!-- card-body-col-2 -->
+								<div class="col-md-6">
+
+									<div class="form-group">
+										<label for="exampleInputID">Number</label>
+										<input type="text" class="form-control" id="mobile1"
+											placeholder="Enter Mobile Number"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+											maxlength="10" minlength="10" name="mobile" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputPassword1">Password</label>
+										<input type="password" class="form-control" id="password1"
+											placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}"
+											title="Must contain at least one number and one uppercase and lowercase letter, and at least 4 or more characters"
+											name="password" required>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputEmail1">Birth Date</label>
+										<input type="date" class="form-control" placeholder="Enter birthday date"
+											name="birth" id="birth1" required>
+									</div>
+
+									<div class="form-group">
+										<label>Gender</label>
+										<select class="custom-select rounded-0" name="gender" id="gender1" required>
+											<option disabled selected> -- Select option -- </option>
+											<option>Male</option>
+											<option>Female</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputFile">Documents</label>
+										<div class="input-group">
+											<div class="custom-file">
+												<input type="file" class="custom-file-input" id="documents1"
+													name="documents" required>
+												<label class="custom-file-label" for="exampleInputFile">Choose
+													file </label>
+											</div>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleSelectBorder">Designation</label>
+										<select class="custom-select rounded-0" id="designation2" name="designation"
+											required>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Work Experience in Number</label>
+										<input type="text" pattern="[0-9]{2}" class="form-control" id="workExpNum1"
+											placeholder="Enter Work Experience in Number" name="workExpNum" required>
+									</div>
+
+								</div>
+								<!-- /-card-body-col-2 -->
+
+							</div>
+							<!-- /.card-body-row -->
+						</div>
+						<!-- /.card-body -->
+
+						<div class="modal-footer">
+							<button type="Reset" class="btn btn-warning">Reset</button>
+							<button type="button" class="btn btn-warning" data-dismiss="modal"
+								aria-label="Close">Close</button>
+							<button type="submit" class="btn btn-warning">Update</button>
+						</div>
+					</form>
+					<!-- /-Modal form -->
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--Edit Staff Modal End-->
+
+
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+
+		<!--layout links insert using fragment-->
+		<div th:insert=~{admin/common/layout::scripts}>
+		</div>
+		<!--Js Code start Here-->
+
+		<script>
+			//Start Code add new Staff
+			$(document).on('submit', '#add-Staff', function (e) {
+				e.preventDefault();
+
+				$.ajax({
+					url: "/add-Staff-API",
+					method: 'POST',
+					data: new FormData(this),
+					contentType: false,
+					processData: false,
+					cache: false,
+
+					success: function (data) {
+
+						if (data == true) {
+							$('#add-Staff-Modal').modal('hide');
+							showStaffDetails();
+							toastr.success('Successfully Saved')
+							$('#add-Staff-Modal')[0].reset();
+						}
+						else {
+							$('#add-Staff-Modal').modal('hide');
+							showStaffDetails();
+							toastr.error('something went to wrong')
+						}
+					},
+					error: function () {
+						toastr.error('something went to wrong')
+					}
+				});
+
+			});
+			//End code add new Staff
+
+
+			//Start Code Show Staff Details Table
+			function showStaffDetails() {
+				$.ajax({
+					url: "/show-staff-details-table-API",
+					type: 'POST',
+
+					success: function (data) {
+						console.log(data)
+						var d = '';
+						for (var i = 0; i < data.length; i++) {
+							d += '<tr>' +
+								'<td > ' + data[i].id + '</td>' +
+								'<td > ' + data[i].name + '</td>' +
+								'<td > ' + data[i].email + '</td>' +
+								'<td > ' + data[i].mobile + '</td>' +
+								'<td > ' + data[i].role + '</td>' +
+								'<td > ' + data[i].designation + '</td>' +
+								'<td > ' + '<button data="' + data[i].id + '" type="button" id="edit-Staff" class="btn btn-sm btn-warning fas fa-edit" data-toggle="modal" data-target="#edit-staff-Modal" onclick="staffRole();" ></button>' + ' ' +
+								'<button data="' + data[i].id + '" id="delete-staff" type="button" class="btn btn-sm btn-danger far fa-trash-alt"></button>' +
+								'</td > ' +
+								'</tr >'
+						}
+						$('#mytable').html(d);
+						$('#example1').DataTable({
+
+							"responsive": true, "lengthChange": false, "autoWidth": false,
+							"buttons": ["excel", "pdf", "print", "colvis"],
+
+							"paging": true,
+							"lengthChange": false,
+							"searching": true,
+							"ordering": false,
+							"info": true,
+							"autoWidth": false,
+							"responsive": true,
+						}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+					},
+					error: function () {
+						alert("error show tabale....")
+					}
+				});
+			}
+			//End Code Show Staff Details Table
+
+			//Edit form button Code Start 
+			$(document).on('click', '#edit-Staff', function (e) {
+				e.preventDefault();
+				staffDesignation();
+				var sid = $(this).attr('data');
+				$.ajax({
+					url: "/edit-staff-API",
+					type: 'POST',
+					data: {id: sid},
+
+					success: function (data) {
+						$('#id1').val(data.id);
+						$('#name1').val(data.name);
+						$('#email1').val(data.email);
+						$('#address1').val(data.address);
+						$('#birth1').val(data.birth);
+						$('#qualification1').val(data.qualification);
+						$('#role2').val(data.role);
+						$('#lastWorkExpe1').val(data.lastWorkExpe);
+						$('#joinDate1').val(data.joinDate);
+						$('#mobile1').val(data.mobile);
+						$('#password1').val(data.password);
+						$('#gender1').val(data.gender)
+						//$('input[name="gender"]:checked').val(data.gender);
+						$('#designation2').val(data.designation);
+						$('#workExpNum1').val(data.workExpNum);
+					},
+					error: function () {
+						alert("error edit modal...")
+					}
+				});
+
+			});
+
+			//Edit button Code End
+
+
+
+			//Start Code update Staff
+			$(document).on('submit', '#update', function (e) {
+				e.preventDefault();
+				$.ajax({
+					url: "/update-staff-API",
+					method: 'POST',
+					data: new FormData(this),
+					contentType: false,
+					processData: false,
+					cache: false,
+					success: function (data) {
+						$('#edit-staff-Modal').modal('hide');
+						showStaffDetails();
+					},
+					error: function () {
+						alert('error update Staff.....');
+					}
+				});
+
+			});
+			//End code Update Staff
+
+
+			//Start Code delete Staff
+			$(document).on('click', '#delete-staff', function (e) {
+				e.preventDefault();
+				var sid = $(this).attr('data');
+				$.ajax({
+					url: "/delete-staff-API",
+					method: 'POST',
+					data: {id: sid},
+					success: function (data) {
+						toastr.error('Successfully deleted')
+						showStaffDetails();
+
+					},
+					error: function () {
+						alert('error delete Staff.....');
+					}
+				});
+
+			});
+
+			//end code Delete Staff
+
+			//staff dyanamically added role get for add modal
+			function staffRole() {
+
+				$.ajax({
+					url: "/GetRoleAdded-API",
+					type: 'POST',
+					data: {},
+					success: function (data) {
+						var a = '<option value="" disabled selected> -- Select Role-- </option>';
+						var b = '';
+						for (i = 0; i < data.length; i++) {
+
+							a += '<option value="' + data[i].field + '">' + data[i].field + '</option>'
+							b += '<option value="' + data[i].field + '">' + data[i].field + '</option>'
+						}
+						$('#role1').html(a)
+						$('#role2').html(b)
+
+						//document.getElementById('leaveType').innerHTML=a;
+
+					},
+					error: function () {
+						alert("error show role....")
+					}
+				});
+			}
+
+			//staff dyanamically added role get for add modal  
+
+			//staff dyanamically added designation get for modal
+			function staffDesignation() {
+				$.ajax({
+					url: "/GetDesignationAdded-API",
+					type: 'POST',
+					data: {},
+					success: function (data) {
+						//alert("success designationcall..... i")
+						var a = '<option value="" disabled selected> -- Select Designation-- </option>';
+						var b = '';
+
+						for (i = 0; i < data.length; i++) {
+
+							a += '<option value="' + data[i].field + '">' + data[i].field + '</option>'
+							b += '<option value="' + data[i].field + '">' + data[i].field + '</option>'
+							//alert("  "+data[i].field)
+						}
+						$('#designation1').html(a)
+						$('#designation2').html(b)
+						//document.getElementById('leaveType').innerHTML=a;
+
+					},
+					error: function () {
+						alert("error show designation....")
+					}
+				});
+			}
+            //staff dyanamically added designation get modal
+
+		</script>
+		<!--Js Code End Here-->
+	</div>
+	<!--/.Wrapper End-->
+</body>
+
+</html>

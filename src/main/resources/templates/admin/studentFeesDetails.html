@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>STUDENT FEES DETAILS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="showTable();" class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h3><b>STUDENT FEES DETAILS</b></h3>
+						</div>
+						
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body text-light" style="background-color:#2596be;">
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Student ID</th>
+												<th class="table-active">Student Name</th>
+												<th class="table-active">Total Fees</th>
+												<th class="table-active">Paid Fess</th>
+												<th class="table-active">Remaining Fess</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+		<!--View Student Details Model Start-->
+		<div class="modal fade" id="view-student-modal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content text-light" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header">
+						<h3 class="modal-title text-center w-100"><b>STUDENT DETAILS</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!--/-modal header -->
+					<!-- Modal form start -->
+					<form id="update">
+						<div class="card-body">
+							<!-- card-body-row -->
+							<div class="row">
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="exampleInputID">Student ID</label>
+										<input type="text" class="form-control" id="ids" name="id" readonly>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="exampleInputID">Student Name</label>
+										<input type="text" class="form-control" id="name" name="name" readonly>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Medium</label>
+										<input type="text" class="form-control" id="medium" name="medium" readonly>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Standard</label>
+										<input type="text" class="form-control" id="standards" name="standards"
+											readonly>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="exampleInputID">Division</label>
+										<input type="text" class="form-control" id="classDiv" name="classDiv" readonly>
+									</div>
+								</div>
+								<!-- /card-body-col-3 -->
+							</div>
+							<div class="row">
+								<table id="example1" class="table table-bordered table-hover">
+									<thead class="table bg-white">
+										<tr>
+											<th class="table-active">Total Fees</th>
+											<th class="table-active">Paid Fess</th>
+											<th class="table-active">Installment</th>
+											<th class="table-active">Fess Paid Date</th>
+											<th class="table-active">remaining Fess</th>
+											<th class="table-active">Next Installment date</th>
+										</tr>
+									</thead>
+									<tbody id="Table" class="table bg-white">
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- /.card-body -->
+					</form>
+					<!-- /-Modal form -->
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--View Student Details Model Start-->
+
+		<!--Edit student Model Start-->
+		<div class="modal fade" id="edit-student-fees-modal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content text-light " style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header">
+						<h3 class="modal-title text-center w-100"><b>EDIT STUDENT FEES</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!--/-modal header -->
+					<!-- Modal form start -->
+					<form id="update">
+						<div class="card-body text-light" style="background-color:#2596be;">
+							<!-- card-body-row -->
+							<div class="row">
+								<!-- card-body-col-1 -->
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleInputID">Student ID</label>
+										<input type="text" class="form-control" id="ids1" name="id" readonly>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputEmail1">Standard</label>
+										<input class="form-control" id="standards1" name="standards"
+											readonly></input>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Division</label>
+										<input class="form-control" id="classDiv1" name="classDiv"
+											readonly></input>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Total Fees</label>
+										<input class="form-control" id="totalFees1" name="totalFees"
+											readonly></input>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Paid Fees</label>
+										<input type="text" class="form-control" placeholder="Enter Paid Fees"
+											id="paidFess1" name="paidFess">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Next Installement Date</label>
+										<input type="date" class="form-control"
+											placeholder="Enter Next Installement Date" id="nextInstall1"
+											name="nextInstall">
+									</div>
+
+								</div>
+								<!-- /-card-body-col-1 -->
+
+								<!-- card-body-col-2 -->
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleInputID">Name</label>
+										<input type="text" class="form-control" id="name1" name="name" readonly>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Medium</label>
+										<input class="form-control" id="medium1" name="medium"
+											readonly></input>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Mobile</label>
+										<input type="text" class="form-control" placeholder="Enter Mobile Number"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+											maxlength="10" minlength="10" id="mobile1" name="mobile" readonly>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Paid Fees Date</label>
+										<input type="date" class="form-control" placeholder="Enter Paid Fees Date"
+											id="paidFessDate1" name="paidFessDate">
+									</div>
+
+									<div class="form-group">
+										<label>Installment</label>
+										<select class="custom-select rounded-0" id="installment1" name="installment">
+											<option disabled selected> -- Select Installment -- </option>
+											<option>One</option>
+											<option>Two </option>
+											<option>Three</option>
+											<option>Four</option>
+											<option>Nil</option>
+
+										</select>
+									</div>
+								</div>
+								<!-- /-card-body-col-2 -->
+							</div>
+						</div>
+						<!-- /.card-body -->
+						<div class="modal-footer">
+							<button type="Reset" class="btn btn-warning">Reset</button>
+							<button type="button" class="btn btn-warning" data-dismiss="modal"
+								aria-label="Close">Close</button>
+							<button type="submit" class="btn btn-warning submit">update</button>
+						</div>
+					</form>
+					<!-- /-Modal form -->
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--Edit student Modal End-->
+
+		<footer class="main-footer">
+			<strong>Copyright &copy; 2022-2023 <a href=" https://www.ezioinfotech.com/">Ezio Infotech Pvt
+					Ltd</a>.</strong>
+			All rights reserved.
+			<div class="float-right d-none d-sm-inline-block">
+				<b>Version</b> 2.0
+			</div>
+		</footer>
+	</div>
+	<!-- ./wrapper -->
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<script>
+		function showTable() {
+			$.ajax({
+				url: "/show-student-Fess-API",
+				type: 'POST',
+				success: function (data) {
+					//console.log(data)
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].id + '</td>' +
+							'<td > ' + data[i].name + '</td>' +
+							'<td > ' + data[i].totalFees + '</td>' +
+							'<td > ' + data[i].paidFess + '</td>' +
+							'<td > ' + data[i].remainingFees + '</td>' +
+							'<td > ' + '<button id="' + data[i].id + '" type="button" class="btn btn-sm btn-warning fas fa-edit" data-toggle="modal" data-target="#edit-student-fees-modal" onclick="getStudentData(this.id);" ></button>' + ' ' +
+							'<button id="' + data[i].id + '" type="button" class="btn btn-sm btn-danger far fa-file-alt" data-toggle="modal" data-target="#view-student-modal" onclick="viewStudent(this.id);"></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+					$('#example1').DataTable({
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": true,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+				},
+				error: function () {
+					alert("error show tabale....")
+				}
+			});
+		}
+
+
+		//Edit form button Code Start 
+		function viewStudent(id) {
+			$.ajax({
+				url: "/edit-student-API",
+				type: 'POST',
+				data: {id: id},
+				success: function (data) {
+					$('#ids').val(data.id);
+					$('#name').val(data.name);
+					$('#standards').val(data.standards);
+					$('#medium').val(data.medium);
+					$('#classDiv').val(data.classDiv);
+
+					var d = '';
+					d += '<tr>' +
+						'<td > ' + data.totalFees + '</td>' +
+						'<td > ' + data.paidFess + '</td>' +
+						'<td > ' + data.installment + '</td>' +
+						'<td > ' + data.paidFessDate + '</td>' +
+						'<td > ' + data.remainingFees + '</td>' +
+						'<td > ' + data.nextInstall + '</td>' +
+						'</td > ' +
+						'</tr >'
+					$('#Table').html(d);
+				},
+				error: function () {
+					alert("error view modal...")
+				}
+			});
+		}
+
+		//Edit button Code End
+		function getStudentData(id) {
+			$.ajax({
+				url: "/edit-student-API",
+				type: 'POST',
+				data: {id: id},
+				success: function (data) {
+					console.log(data)
+					$('#ids1').val(data.id);
+					$('#name1').val(data.name);
+					$('#standards1').val(data.standards);
+					$('#mobile1').val(data.mobile);
+					$('#medium1').val(data.medium);
+					$('#classDiv1').val(data.classDiv);
+					$('#totalFees1').val(data.totalFees);
+					$('#paidFessDate1').val(data.paidFessDate);
+					$('#paidFess1').val(data.paidFess);
+					$('#nextInstall1').val(data.nextInstall);
+					$('#installment1').val(data.installment);
+					alert(data.installment);
+				},
+				error: function () {
+					alert("error edit modal...")
+				}
+			});
+		}
+		
+		
+		//Start Code add New student
+		$(document).on('submit', '#update', function (e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: "/update-student-fees-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+					alert("student add...");
+
+					$('#edit-student-fees-modal').modal('hide');
+					showTable();
+
+				},
+				error: function () {
+
+					alert('error edit-student-fees-modal.....');
+				}
+			});
+
+		});
+		//End code add new student
+	</script>
+</body>

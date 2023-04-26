@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Layout Page</title>
+
+	<div th:fragment="links">
+		<!-- Google Font: Source Sans Pro -->
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="admin/plugins/fontawesome-free/css/all.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+			integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
+
+
+		<!-- Theme style -->
+		<link rel="stylesheet" href="admin/dist/css/adminlte.min.css">
+		<!-- overlayScrollbars -->
+		<link rel="stylesheet" href="admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
+		<!-- Dashboard Contains -->
+		<!-- Ionicons -->
+		<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+		<!-- Tempusdominus Bootstrap 4 -->
+		<link rel="stylesheet" href="admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+		<!-- iCheck -->
+		<link rel="stylesheet" href="admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+		<!-- JQVMap -->
+		<link rel="stylesheet" href="admin/plugins/jqvmap/jqvmap.min.css">
+		<!-- Daterange picker -->
+		<link rel="stylesheet" href="admin/plugins/daterangepicker/daterangepicker.css">
+		<!-- summernote -->
+		<link rel="stylesheet" href="admin/plugins/summernote/summernote-bs4.min.css">
+
+		<!-- DataTables -->
+		<link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+		<link rel="stylesheet" href="admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+		<link rel="stylesheet" href="admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+		<!-- SweetAlert2 -->
+		<link rel="stylesheet" href="admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		<!-- Toastr -->
+		<link rel="stylesheet" href="admin/plugins/toastr/toastr.min.css">
+
+	</div>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+		<!-- Navbar -->
+		<div th:fragment="navbar">
+			<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+				<!-- Left navbar links -->
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
+								class="fas fa-bars"></i></a>
+					</li>
+					<li class="nav-item d-none d-sm-inline-block">
+						<a th:href="@{/dashboard-API}" class="nav-link">Home</a>
+					</li>
+					<li class="nav-item d-none d-sm-inline-block">
+						<a href="#" class="nav-link">Contact</a>
+					</li>
+				</ul>
+
+				<!-- Right navbar links -->
+				<ul class="navbar-nav ml-auto">
+
+					<!-- Notifications Dropdown Menu -->
+					<li class="nav-item">
+						<a class="nav-link" title="Full Screen" data-widget="fullscreen" href="#" role="button"><i
+								class="fas fa-expand-arrows-alt"></i>
+
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" title="Log Out" th:href="@{/}" role="button"><i
+								class="fas fa-sign-out-alt"></i></a>
+
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<!-- /.navbar -->
+
+		<!-- Main Sidebar Contain Start -->
+		<aside class="main-sidebar sidebar-dark-primary elevation-4" th:fragment="sidebar"
+			style="background-color: #1e7898;">
+			<!-- Brand Logo -->
+			<a href="#" class="brand-link">
+				<img src="admin/dist/img/Ezio-logo.png" alt="Admin" class="brand-image img-circle elevation-3"
+					style="opacity: .8">
+				<span class="brand-text font-weight-light">Ezio Infotech Pvt.Ltd.</span>
+			</a>
+
+
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<!-- Sidebar user panel (optional) -->
+				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+					<div class="image">
+						<img src="admin/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info">
+						<a href="#" class="d-block" th:if="${session.role=='Admin'}">Admin</a>
+						<a href="#" class="d-block" th:if="${session.role=='Teaching'}">Staff</a>
+					</div>
+				</div>
+
+				<!-- SidebarSearch Form -->
+				<div class="form-inline">
+					<div class="input-group">
+						<div class="input-group-append">
+							<div>
+								<button th:if="${session.role!='Admin'}" type="submit"
+									class="btn bg-warning bt-sm form-control form-control-sidebar mr-2"
+									onclick="punch(this.id);" id="PunchIn" name="punchIn">Punch
+									IN</button>
+							</div>
+							<div>
+								<button th:if="${session.role!='Admin'}" type="submit"
+									class="btn bg-warning bt-sm form-control form-control-sidebar"
+									onclick="punch(this.id);" id="PunchOut" name="punchOut">Punch
+									OUT</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Sidebar Menu -->
+				<nav class="mt-2">
+					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+						data-accordion="false">
+
+						<!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+						<li class="nav-item" th:if="${session.role=='Admin'}">
+							<a th:href="@{/dashboard-API}" class="nav-link">
+								<i class="nav-icon fas fa-home"></i>
+								<p>Dashboard </p>
+							</a>
+						</li>
+
+						<!-- Staff Details code -->
+						<li class="nav-item">
+							<a class="nav-link" th:if="${session.role =='Admin'}">
+								<i class="nav-icon fas fa-chalkboard-teacher"></i>
+								<p>
+									Staff Details
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a th:href="@{/staff-Details-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Staff Registration</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a th:href="@{/Admin-staff-Attendence-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Attendence Details</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a th:href="@{/Staff-LeaveDetails-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Leave Details</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a th:href="@{/salary-details-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Salary Details</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- /- Staff Datils code -->
+
+
+						<!-- Student Details code -->
+						<li class="nav-item">
+							<a class="nav-link" th:if="${session.role =='Admin'}">
+								<i class="nav-icon fas fa-user-graduate"></i>
+								<p>
+									Student Details
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a th:href="@{/student-Registration-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Student Registration</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="/student-fees-deatils-API" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Student Fees Details</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- /- Student Details code -->
+
+						<!-- Staff Details code -->
+						<li class="nav-item">
+							<!--			<a th:if="${session.role=='Teaching'}" class="nav-link"> -->
+
+							<a href="#" class="nav-link">
+								<i class="nav-icon fas fa-chalkboard-teacher"></i>
+								<p>
+									Staff
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a th:href="@{/staff-staff-Attendence-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Attendence</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a th:href="@{/staff-leave-apply-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Leave Application</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a th:href="@{/salary-Slip-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Salary Slip</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- /- Staff Details code -->
+
+						<!-- Settings code -->
+						<li class="nav-item">
+
+							<a th:if="${session.role=='Admin'}" class="nav-link">
+								<!--	<i class="nav-icon fas fa-setting"></i> -->
+								<i class="nav-icon fas fa-cog"></i>
+								<p>
+									Settings
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a th:href="@{/staff-role-add-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Role</p>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a th:href="@{/salary-calculation-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Salary</p>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a th:href="@{/standards-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Standards</p>
+									</a>
+								</li>
+							</ul>
+								<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a th:href="@{/holidays-API}" class="nav-link">
+									<i class="fas fa-spinner nav-icon"></i>
+										<p>Holidays</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- /-  Settings code -->
+					</ul>
+				</nav>
+				<!-- /.sidebar-menu -->
+		</aside>
+		<!-- /.sidebar End -->
+
+			    
+			    		<!-- Contains page start -->
+		<div class="content-wrapper ">
+			<section class="content">
+				
+			</section>
+		</div>
+		<!-- Contains page end -->
+		
+		
+		
+
+		<!-- Footer start -->
+		<footer class="main-footer" th:fragment="footer">
+			<strong>Copyright &copy; 2022-2023 <a href=" https://www.ezioinfotech.com/">Ezio Infotech Pvt
+					Ltd</a>.</strong>
+			All rights reserved.
+			<div class="float-right d-none d-sm-inline-block">
+				<b>Version</b> 2.0
+			</div>
+		</footer>
+		<!-- Footer End -->
+		
+		 <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+		<!-- Scripts-->
+		<div th:fragment="scripts">
+			<script>
+				//start code for Staff Punch in and Punch Out
+				function punch(status) {
+					//alert("Staff.jjj..   " + status)
+					$.ajax({
+						type: 'ajax',
+						method: 'POST',
+						url: "punch-API",
+						data: {status: status},
+
+						success: function (data) {
+							//alert("Succesfully Punching....  ")
+
+							//this Function code in AlL Js Function Files
+							buttons();
+
+						},
+						error: function () {
+							//alert('error Punching .....');
+						}
+					});
+
+				};
+
+				//End code for Staff Punch in and Punch Out
+
+
+
+				//start code for show Punch in and Punch Out buttons  
+				function buttons() {
+					//alert('buttons call....');
+					$.ajax({
+						type: 'ajax',
+						method: 'POST',
+						url: "button-API",
+
+						success: function (data) {
+							if (data.status == null) {
+								//alert("1....." )
+								$("#PunchIn").show();
+								$("#PunchOut").hide();
+								ShowTable();
+							}
+							else if (data.status == "PunchIn") {
+								//alert("2........   " + data.status)
+								$("#PunchIn").hide();
+								$("#PunchOut").show();
+								ShowTable();
+
+							} else if (data.status == "PunchOut") {
+								//alert("3...   " + data.status)
+								$("#PunchIn").hide();
+								$("#PunchOut").hide();
+								ShowTable();
+							}
+
+						},
+						error: function () {
+							alert('error  .....');
+						}
+					});
+				}
+
+//End code for show Punch in and Punch Out buttons
+
+			</script>
+
+			<!--Js Function Links -->
+			<!--			<script src="admin/js/allJsFunction.js"></script>-->
+
+			<!-- jQuery -->
+			<script src="admin/plugins/jquery/jquery.min.js"></script>
+			<!-- jQuery UI 1.11.4 -->
+			<script src="admin/plugins/jquery-ui/jquery-ui.min.js"></script>
+			<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+			<script>
+				$.widget.bridge('uibutton', $.ui.button)
+			</script>
+			<!-- Bootstrap 4 -->
+			<script src="admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+			<!-- overlayScrollbars -->
+			<script src="admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+			<!-- AdminLTE App -->
+			<script src="admin/dist/js/adminlte.js"></script>
+			<!-- AdminLTE for demo purposes -->
+			<script src="admin/dist/js/demo.js"></script>
+
+			<!-- DataTables  & Plugins -->
+			<script src="admin/plugins/datatables/jquery.dataTables.min.js"></script>
+			<script src="admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+			<script src="admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+			<script src="admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+			<script src="admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+			<script src="admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+			<script src="admin/plugins/jszip/jszip.min.js"></script>
+			<script src="admin/plugins/pdfmake/pdfmake.min.js"></script>
+			<script src="admin/plugins/pdfmake/vfs_fonts.js"></script>
+			<script src="admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+			<script src="admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+			<script src="admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+			<!-- ChartJS -->
+			<script src="admin/plugins/chart.js/Chart.min.js"></script>
+			<!-- Sparkline -->
+			<script src="admin/plugins/sparklines/sparkline.js"></script>
+			<!-- JQVMap -->
+			<script src="admin/plugins/jqvmap/jquery.vmap.min.js"></script>
+			<script src="admin/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+			<!-- jQuery Knob Chart -->
+			<script src="admin/plugins/jquery-knob/jquery.knob.min.js"></script>
+			<!-- daterangepicker -->
+			<script src="admin/plugins/moment/moment.min.js"></script>
+			<script src="admin/plugins/daterangepicker/daterangepicker.js"></script>
+			<!-- Tempusdominus Bootstrap 4 -->
+			<script src="admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+			<!-- Summernote -->
+			<script src="admin/plugins/summernote/summernote-bs4.min.js"></script>
+			<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+			<script src="admin/dist/js/pages/dashboard.js"></script>
+
+			<!-- SweetAlert2 -->
+			<script src="admin/plugins/sweetalert2/sweetalert2.min.js"></script>
+			<!-- Toastr -->
+			<script src="admin/plugins/toastr/toastr.min.js"></script>
+
+
+		</div>
+		<!-- /Scripts-->
+	</div>
+	<!-- ./wrapper -->
+</body>
+
+</html>

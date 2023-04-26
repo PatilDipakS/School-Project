@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ADD HOLIDAYS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="showTable();" class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header  text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">DataTables</li>
+							</ol>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<!-- card-header -->
+								<div class="card-header" style="background-color:#2596be;">
+									<div class="card-title" align="right">
+										<button type="submit" class="btn btn-light" align="left" data-toggle="modal"
+											data-target="#addModal">ADD HOLIDAY</button>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body" style="background-color:#2596be;">
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Holiday Name</th>
+												<th class="table-active">Holiday Date</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+		<!--add Role Modal Start-->
+		<div class="modal fade" id="addModal">
+			<div class="modal-dialog">
+				<div class="modal-content" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header">
+						<h3 class="modal-title text-light text-center w-100"><b>ADD HOLIDAY</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<!--/-modal header -->
+					</div>
+
+					<!-- modal-body-->
+					<div class="modal-body text-light">
+						<form>
+
+							<div class="form-group">
+								<label for="exampleSelectBorder">Holiday Name</label>
+								<input type="text" class="form-control" placeholder="Enter field here" id="holidayName"
+									name="holidayName" required>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleSelectBorder">Holiday Date</label>
+								<input type="date" class="form-control" placeholder="Enter field here" id="holidayDate"
+									name="holidayDate" required>
+							</div>
+
+							<div class="modal-footer" align="right">
+								<button type="submit" onclick="save();" class="btn btn-warning">Add</button>
+								<button type="Reset" class="btn btn-warning ">Reset</button>
+								<div class="float-left">
+									<button type="button" class="btn btn-warning">Close</button>
+								</div>
+							</div>
+						</form>
+
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--add Role Modal End-->
+
+
+		<!--edit Role Modal Start-->
+		<div class="modal fade" id="editModal">
+			<div class="modal-dialog">
+				<div class="modal-content" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header">
+						<h3 class="modal-title text-light text-center w-100"><b>EDIT HOLIDAY</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<!--/-modal header -->
+					</div>
+
+					<!-- modal-body-->
+					<div class="modal-body text-light">
+						<form id="update">
+							<div class="form-group">
+								<label for="exampleSelectBorder">Holiday Name</label>
+								<input type="text" class="form-control" placeholder="Enter field here" id="holidayName1"
+									name="holidayName" required>
+								<input type="hidden" class="form-control" placeholder="Enter field here" id="ids"
+									name="id" required>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleSelectBorder">Holiday Date</label>
+								<input type="date" class="form-control" placeholder="Enter field here" id="holidayDate1"
+									name="holidayDate" required>
+							</div>
+
+							<div class="modal-footer" align="right">
+								<button type="submit" class="btn btn-warning">Update</button>
+								<button type="Reset" class="btn btn-warning ">Reset</button>
+								<div class="float-left">
+									<button type="button" class="btn btn-warning">Close</button>
+								</div>
+							</div>
+						</form>
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--edit Role Modal End-->
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<!--Js Code start Here-->
+	<script>
+
+		//code for add role dyanamically by admin
+		function save() {
+
+			var holidayName = document.getElementById('holidayName').value;
+
+			var holidayDate = document.getElementById('holidayDate').value;
+
+			alert("save ....." + holidayName);
+			alert("save ....." + holidayDate);
+
+			$.ajax({
+				type: 'POST',
+				data: {holidayName: holidayName, holidayDate: holidayDate},
+				url: '/save-Holiday-API',
+				success: function (data) {
+
+					//toastr.success('success')
+				},
+				error: function (data) {
+
+					alert("error.....");
+				}
+			});
+		};
+
+		//code for read the leave table value
+		function showTable() {
+
+			$.ajax({
+				url: "/show-holidays-data-table-API",
+				type: 'POST',
+
+				success: function (data) {
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].holidayName + '</td>' +
+							'<td > ' + data[i].holidayDate + '</td>' +
+							'<td > ' + '<button id="' + data[i].id + '" type="button" onclick="edit(this.id);" class=" btn btn-sm btn-warning fas fa-edit"  data-toggle="modal" data-target="#editModal" ></button>' + ' ' +
+							'<button id="' + data[i].id + '" onclick="deleteHoliday(this.id);" type="button" class="btn btn-sm btn-danger far fa-trash-alt"></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+					$('#example1').DataTable({
+
+						"responsive": true, "lengthChange": true, "autoWidth": true,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+
+						"paging": false,
+						"lengthChange": true,
+						"searching": true,
+						"ordering": false,
+						"info": true,
+						"autoWidth": true,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+				},
+				error: function () {
+					alert("error show table....")
+				}
+			});
+		}
+
+		//Get Value in Edit Role modal 
+
+
+		//Edit form button Code Start 
+		function edit(id) {
+
+			//	alert(" edit function Callll...." + id);
+
+			$.ajax({
+				url: "/edit-modal-data-API",
+				type: 'POST',
+				data: {id: id},
+
+				success: function (data) {
+					$('#ids').val(data.id);
+					$('#holidayName1').val(data.holidayName);
+					$('#holidayDate1').val(data.holidayDate);
+					//alert(" edit sueccess Callll...." + data.id);
+
+				},
+				error: function () {
+					alert("error edit function role modal...")
+				}
+			});
+		};
+
+		//Edit form button Code END
+
+
+
+		//Start Code update Role MOdal
+
+		$(document).on('submit', '#update', function () {
+			//	e.preventDefault();
+			//alert("kjvab......")
+			$.ajax({
+				url: "/save-Holiday-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+
+
+					//$('#edit-staff-Modal').modal('hide');
+					//showStaffDetails();
+
+				},
+				error: function () {
+					alert('error update.....');
+				}
+			});
+
+		});
+		//End code Update Role MOdal
+
+
+		//Edit form button Code Start 
+		function deleteHoliday(id) {
+
+
+			$.ajax({
+				url: "/delete-holiday-API",
+				type: 'POST',
+				data: {id: id},
+
+				success: function (data) {
+					showTable();
+				},
+					error: function () {
+						alert("error....")
+				}
+			});
+		}
+
+		//Edit form button Code END
+
+
+		// <!-- Page specific script -->
+
+
+
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Dashboard Page</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="count();" class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+	<!-- start nav bar-->
+	<div class="wrapper">
+		<!-- start nav bar-->
+		<div th:insert="~{admin/common/layout::navbar}">
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert="~{admin/common/layout::sidebar}">
+		</div>
+		<!-- end side bar-->
+
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<section class="content">
+				<div class="container-fluid">
+					<section class="content-header">
+						<div class="row">
+							<div class="col-lg-4 col-6 text-danger">
+								<h3><b>DASHBORD</b></h3>
+							</div>
+						</div>
+					</section>
+					<!-- Small boxes (Stat box) -->
+					<div class="row">
+						<div class="col-lg-4 col-6">
+							<!-- small box -->
+							<div class="small-box text-light" style="background-color:#2596be;">
+								<div class="inner">
+									<h4 id="total"><b></b></h4>
+									<p>Total Registration</p>
+								</div>
+								<div class="icon">
+									<i class="nav-icon fas fa-users"></i>
+								</div>
+								<a th:href="@{/dashboard-API}" class="small-box-footer">More info <i
+										class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+
+						<div class="col-lg-4 col-6">
+							<!-- small box -->
+							<div class="small-box text-light" style="background-color:#2596be;">
+								<div class="inner">
+									<h4 id="staff"><b></b></h4>
+									<p>Staff Registrations</p>
+									
+								</div>
+								<div class="icon">
+									<i class="nav-icon fas fa-chalkboard-teacher"></i>
+								</div>
+								<a th:href="@{/staff-Details-API}" class="small-box-footer">More info <i
+										class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-4 col-6">
+							<!-- small box -->
+							<div class="small-box text-light" style="background-color:#2596be;">
+								<div class="inner">
+									<h4 id="student"><b></b></h4>
+
+									<p>Student Registrations</p>
+								</div>
+								<div class="icon">
+									<i class="nav-icon fas fa-user-graduate"></i>
+								</div>
+								<a th:href="@{/student-Registration-API}" class="small-box-footer">More info <i
+										class="fas fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<!-- ./col -->
+					</div>
+					<!-- /.row -->
+				</div>
+			</section>
+		</div>
+	</div>
+	<!-- Contain end -->
+
+	<!-- Footer start -->
+	<div th:insert="~{admin/common/layout::footer}">
+	</div>
+	<!-- Footer end -->
+
+	<!--layout links insert using fragment-->
+	<div th:insert="~{admin/common/layout::scripts}">
+	</div>
+<!--script for to calculate total registration-->
+	<script>
+		function count() {
+			$.ajax({
+				url: "/count-registarion-API",
+				type: 'POST',
+				data: {},
+				success: function (data) {
+					$('#total').html(data.totalCount);
+					$('#staff').html(data.staffCount);
+					$('#student').html(data.studentCount);
+				},
+				error: function (data) {
+					alert("error count modal...")
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

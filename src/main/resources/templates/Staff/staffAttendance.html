@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ATTENDANCE DETAILS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="ShowTable(),buttons();" class="hold-transition sidebar-mini layout-fixed"
+	data-panel-auto-height-mode="height">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h3><b>ATTENDANCE DETAILS</b></h3>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">DataTables</li>
+							</ol>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body text-light" style="background-color:#2596be;">
+									<form>
+										<div class="row">
+											<div class="form-group  col-md-2">
+												<input type="date" id="dateTo" class="form-control" required
+													onchange="dateFilter();">
+											</div>
+											<div class="form-group col-md-2">
+												<input type="date" id="dateFrom" class="form-control" required
+													onchange="dateFilter();">
+											</div>
+
+										</div>
+									</form>
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Staff Id</th>
+												<th class="table-active">Name</th>
+												<th class="table-active">Date</th>
+												<th class="table-active">Status</th>
+												<th class="table-active">Punch In time</th>
+												<th class="table-active">Punch Out time</th>
+												<th class="table-active">Work Hours</th>
+											</tr>
+										</thead>
+										<tbody id="myTable" class="table bg-white">
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+
+
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<!--Js Code start Here-->
+	<script>
+
+		//start code for Show Teacher Attendence table
+		function ShowTable() {
+
+			//	alert("table...   ")
+
+			$.ajax({
+
+				method: 'GET',
+				url: "show-Staff-In-Out-table-API",
+				//data: {},
+
+
+				success: function (data) {
+					//	alert('success table .....'+data.length);
+
+					var v = "";
+					console.log(data)
+					for (var i = 0; i < data.length; i++) {
+						v += '<tr>' +
+							'<td>' + data[i].staffId + '</td>' +
+							'<td>' + data[i].staffName + '</td>' +
+							'<td>' + data[i].date + '</td>' +
+							'<td>' + data[i].status + '</td>' +
+							'<td>' + data[i].punchIn + '</td>' +
+							'<td>' + data[i].punchOut + '</td>' +
+							'<td>' + data[i].totalHr + '</td>' +
+							'</tr>'
+					}
+					$('#myTable').html(v);
+					$('#example1').DataTable({
+
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": true,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+				},
+				error: function (data) {
+					alert('error table .....' + data.staffId);
+				},
+			});
+
+		}
+		//Endcode start code for Show Teacher Attendence
+		
+
+		// 		start code for Staff Select single date attendence  or Between date Atttendence
+		function dateFilter() {
+			var toDate = document.getElementById('dateTo').value;
+			var dateArray = toDate.split("-");
+			var reversedArray = dateArray.reverse();
+			var newToDate = reversedArray.join("-");
+			//console.log('value:  2--------- ' + newToDate)
+
+			var fromDate = document.getElementById('dateFrom').value;
+			var dateArray = fromDate.split("-");
+			var reversedArray = dateArray.reverse();
+			var newFromDate = reversedArray.join("-");
+			//console.log('value:  4---------  ' + newFromDate)
+
+			$.ajax({
+
+				url: "staff-dateFilter-API",
+				type: "POST",
+				data: {newToDate: newToDate, newFromDate: newFromDate},
+
+				success: function (data) {
+					alert('success ');
+					var v = "";
+					console.log(data)
+					for (var i = 0; i < data.length; i++) {
+						v += '<tr>' +
+							'<td>' + data[i].staffId + '</td>' +
+							'<td>' + data[i].staffName + '</td>' +
+							'<td>' + data[i].date + '</td>' +
+							'<td>' + data[i].status + '</td>' +
+							'<td>' + data[i].punchIn + '</td>' +
+							'<td>' + data[i].punchOut + '</td>' +
+							'<td>' + data[i].totalHr + '</td>' +
+							'</tr>'
+					}
+					$('#myTable').html(v);
+				},
+				error: function (data) {
+					alert('error  ');
+
+				}
+			});
+		}
+// 		End code for Staff Select single date attendence  or Between date Atttendence
+	</script>
+	<!--Js Code End Here-->
+
+</body>
+
+</html>

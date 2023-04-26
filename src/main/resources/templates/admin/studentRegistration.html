@@ -1,0 +1,663 @@
+<!DOCTYPE html>																																								
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>STUDENT REGISTRATION DETAILS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="showTable();" class="hold-transition sidebar-mini layout-fixed">
+	<!-- start nav bar-->
+	<div class="wrapper">
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6 text-danger" >
+							<h3><b>STUDENT REGISTRATION DETAILS</b></h3>
+						</div>
+						
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card" style="background-color:#2596be;">
+								<div class="card-header text-white">
+									<div class="card-title ">
+									</div>
+									<div>
+										<button type="submit" class="btn btn-light" data-toggle="modal"
+											data-target="#add-student-modal">NEW STUDENT REGISTRATION</button>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body text-light" style="background-color:#2596be;">
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Student ID</th>
+												<th class="table-active">Student Name</th>
+												<th class="table-active">Standard</th>
+												<th class="table-active">Medium</th>
+												<th class="table-active">Division</th>
+												<th class="table-active">Mobile</th>
+												<th class="table-active">Address</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+		<!--Add Student Model Start-->
+		<div class="modal fade" id="add-student-modal">
+			<div class="modal-dialog modal-lg ">
+				<div class="modal-content " style="background-color:#2596be;">
+
+					<!--modal header -->
+					<div class="modal-header" >
+						<h3 class="modal-title text-light text-center w-100"><b>NEW STUDENT REGISTRTION</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!--/-modal header -->
+
+					<!-- Modal form start -->
+					<form id="add">
+						<div class="card-body text-light">
+							<!-- card-body-row -->
+							<div class="row">
+								<!-- card-body-col-1 -->
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="exampleInputID">Name</label>
+										<input type="text" class="form-control" placeholder="Enter Full Name"
+											name="name">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputEmail1">Standard</label>
+										<select class="custom-select rounded-0" id="standards1"
+											name="standards"></select>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Address</label>
+										<input type="text" class="form-control" placeholder="Enter address"
+											name="address"> </input>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputFile">Documents</label>
+										<div class="input-group">
+											<div class="custom-file">
+												<input type="file" class="custom-file-input" name="documents">
+												<label class="custom-file-label" for="exampleInputFile">Choose
+													file</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Admission Date</label>
+										<input type="date" class="form-control" name="admissionDate">
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Paid Fees</label>
+										<input type="text" class="form-control" placeholder="Enter Paid Fees"
+											name="paidFess">
+									</div>
+								</div>
+								<!-- /-card-body-col-1 -->
+
+								<!-- card-body-col-2 -->
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="exampleInputEmail1">Birth Date</label>
+										<input type="date" class="form-control" placeholder="Enter birthday date"
+											name="birth">
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Medium</label>
+										<select class="custom-select rounded-0" id="medium1" name="medium"></select>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Mobile</label>
+										<input type="text" class="form-control" placeholder="Enter Mobile Number"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+											maxlength="10" minlength="10" name="mobile">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Email</label>
+										<input type="email" class="form-control" placeholder="Enter email" name="email">
+									</div>
+
+									<div class="form-group">
+										<label for="exampleInputID">Total Fees</label>
+										<select class="custom-select rounded-0" id="totalFees1"
+											name="totalFees"></select>
+
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Fees Paid Date</label>
+										<input type="Date" class="form-control" placeholder="Select Paid Date"
+											name="paidFessDate">
+									</div>
+								</div>
+								<!-- /-card-body-col-2 -->
+
+								<!-- card-body-col-3 -->
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Gender</label>
+										<select class="custom-select rounded-0" name="gender">
+											<option disabled selected> -- Select option -- </option>
+											<option>Male</option>
+											<option>Female</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Division</label>
+										<select class="custom-select rounded-0" id="classDiv1" name="classDiv"></select>
+
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Pin No</label>
+										<input type="textr" class="form-control" placeholder="Enter pin no" name="pin">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputPassword1">Password</label>
+										<input type="password" class="form-control" placeholder="Enter Password"
+											pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}"
+											title="Must contain at least one number and one uppercase and lowercase letter, and at least 4 or more characters"
+											name="password">
+									</div>
+									<div class="form-group">
+										<label>Installment</label>
+										<select class="custom-select rounded-0" name="installment">
+											<option disabled selected> -- Select Installment -- </option>
+											<option>One</option>
+											<option>Two </option>
+											<option>Three</option>
+											<option>Four</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputID">Next Installement Date</label>
+										<input type="date" class="form-control"
+											placeholder="Enter Next Installement Date" name="nextInstall">
+									</div>
+									<!-- /card-body-col-3 -->
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-warning">Save</button>
+								<button type="reset" class="btn btn-warning">Reset</button>
+								<button type="button" class="btn btn-warning"
+									data-dismiss="modal" aria-label="Close">Close</button>
+							</div>
+
+					</form>
+					<!-- /-Modal form -->
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--Add Student Modal End-->
+	</div>
+	<!--/.Wrapper End-->
+
+	<!--Edit student Model Start-->
+	<div class="modal fade" id="edit-student-modal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content text-light" style="background-color:#2596be;">
+				<!--modal header -->
+				<div class="modal-header">
+					<h3 class="modal-title text-light text-center w-100"><b>EDIT STUDENT REGISTRTION</b></h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<!--/-modal header -->
+
+				<!-- Modal form start -->
+				<form id="update">
+					<div class="card-body">
+						<!-- card-body-row -->
+						<div class="row">
+							<!-- card-body-col-1 -->
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="exampleInputID">Name</label>
+									<input type="hidden" class="form-control" id="ids" name="id">
+									<input type="text" class="form-control" placeholder="Enter Full Name" id="name"
+										name="name">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Standard</label>
+									<select class="custom-select rounded-0" id="standards2" name="standards"></select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Address</label>
+									<input type="text" class="form-control" placeholder="Enter address" id="address"
+										name="address"> </input>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputFile">Documents</label>
+									<div class="input-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="documents"
+												name="documents">
+											<label class="custom-file-label" for="exampleInputFile">Choose
+												file</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Admission Date</label>
+									<input type="date" class="form-control" id="admissionDate" name="admissionDate">
+
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Paid Fees</label>
+									<input type="text" class="form-control" placeholder="Enter Paid Fees" id="paidFess"
+										name="paidFess">
+								</div>
+							</div>
+							<!-- /-card-body-col-1 -->
+
+							<!-- card-body-col-2 -->
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="exampleInputEmail1">Birth Date</label>
+									<input type="date" class="form-control" placeholder="Enter birthday date" id="birth"
+										name="birth">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Medium</label>
+									<select class="custom-select rounded-0" id="medium2" name="medium"></select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Mobile</label>
+									<input type="text" class="form-control" placeholder="Enter Mobile Number"
+										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+										maxlength="10" minlength="10" id="mobile" name="mobile">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Email</label>
+									<input type="email" class="form-control" placeholder="Enter email" id="email"
+										name="email">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Total Fees</label>
+									<select class="custom-select rounded-0" id="totalFees2" name="totalFees"></select>
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputID">Fees Paid Date</label>
+									<input type="Date" class="form-control" placeholder="Enter Fees paid date"
+										id="paidFessDate" name="paidFessDate"></input>
+								</div>
+							</div>
+							<!-- /-card-body-col-2 -->
+
+							<!-- card-body-col-3 -->
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Gender</label>
+									<select class="custom-select rounded-0" id="gender" name="gender">
+										<option disabled selected> -- Select Option -- </option>
+										<option>Male</option>
+										<option>Female</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Division</label>
+									<select class="custom-select rounded-0" id="classDiv2" name="classDiv"></select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Pin No</label>
+									<input type="text" class="form-control" placeholder="Enter pin no" id="pin"
+										name="pin">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Password</label>
+									<input type="password" class="form-control" placeholder="Enter Password"
+										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}"
+										title="Must contain at least one number and one uppercase and lowercase letter, and at least 4 or more characters"
+										id="password" name="password">
+								</div>
+								<div class="form-group">
+									<label>Installment</label>
+									<select class="custom-select rounded-0" id="installment" name="installment">
+										<option disabled selected> -- Select Installment -- </option>
+										<option>One</option>
+										<option>Two </option>
+										<option>Three</option>
+										<option>Four</option>
+										<option>Nil</option>
+
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputID">Next Installement Date</label>
+									<input type="date" class="form-control" placeholder="Enter Next Installement Date"
+										id="nextInstall" name="nextInstall">
+								</div>
+							</div>
+							<!-- /card-body-col-3 -->
+						</div>
+					</div>
+					<!-- /.card-body -->
+					<div class="modal-footer">
+					<button type="reset" class="btn btn-warning" data-dismiss="modal" aria-label="Close">Reset</button>
+						<button type="button" class="btn  btn-warning" data-dismiss="modal" aria-label="Close" >Close</button>
+						<button type="submit" class="btn  btn-warning" >Update</button>
+					</div>
+				</form>
+				<!-- /-Modal form -->
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!--Edit student Modal End-->
+
+	<!-- Footer start -->
+	<div th:insert=~{admin/common/layout::footer}>
+	</div>
+	<!-- Footer end -->
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+	<!--Js Code start Here-->
+
+	<script>
+		//Start Code add New student
+		$(document).on('submit', '#add', function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: "/add-student-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+					$('#add-student-modal').modal('hide');
+					showTable();
+				},
+				error: function () {
+					alert('error add student.....');
+				}
+			});
+
+		});
+		//End code add new student
+
+		//Show student details table
+		function showTable() {
+			$.ajax({
+				url: "/show-student-API",
+				type: 'POST',
+
+				success: function (data) {
+					//console.log(data)
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].id + '</td>' +
+							'<td > ' + data[i].name + '</td>' +
+							'<td > ' + data[i].standards + '</td>' +
+							'<td > ' + data[i].medium + '</td>' +
+							'<td > ' + data[i].classDiv + '</td>' +
+							'<td > ' + data[i].mobile + '</td>' +
+							'<td > ' + data[i].address + '</td>' +
+							'<td > ' + '<button id="' + data[i].id + '" type="button" class="btn btn-sm btn-warning fas fa-edit" data-toggle="modal" data-target="#edit-student-modal" onclick="getstudentData(this.id);" ></button>' + ' ' +
+							'<button id="' + data[i].id + '" type="button" class="btn btn-sm btn-danger far fa-trash-alt" onclick="deleteStudent(this.id);"></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+					$('#example1').DataTable({
+
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": true,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+					standards();
+					medium();
+					divisions();
+					totalFees();
+				},
+				error: function () {
+					alert("error show tabale....")
+				}
+			});
+		}
+		//End Code Show student details table
+
+		//Edit form button Code Start 
+		function getstudentData(id) {
+			$.ajax({
+				url: "/edit-student-API",
+				type: 'POST',
+				data: {id: id},
+				success: function (data) {
+					$('#ids').val(data.id);
+					$('#name').val(data.name);
+					$('#birth').val(data.birth);
+					$('#mobile').val(data.mobile);
+					$('#gender').val(data.gender);
+					$('#standards').val(data.standards);
+					$('#medium').val(data.medium);
+					$('#classDiv').val(data.classDiv);
+					$('#address').val(data.address)
+					$('#paidFessDate').val(data.paidFessDate);
+					$('#pin').val(data.pin);
+					$('#email').val(data.email);
+					$('#password').val(data.password);
+					$('#installment').val(data.installment);
+					$('#totalFees').val(data.totalFees);
+					$('#admissionDate').val(data.admissionDate);
+					$('#paidFess').val(data.paidFess);
+					$('#nextInstall').val(data.nextInstall);
+				},
+				error: function () {
+					alert("error edit modal...")
+				}
+			});
+		}
+		//Edit button Code End
+
+
+
+		//Start Code update Student
+		$(document).on('submit', '#update', function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: "/update-student-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+					$('#edit-student-modal').modal('hide');
+					showTable();
+
+				},
+				error: function () {
+					alert('error update student.....');
+				}
+			});
+
+		});
+		//End code Update Student
+
+
+		//Start Code delete Student
+		function deleteStudent(id) {
+
+			$.ajax({
+				url: "/delete-student-API",
+				method: 'POST',
+				data: {id: id},
+				success: function (data) {
+					alert("deletd...");
+					showTable();
+				},
+				error: function () {
+					alert('error delete student.....');
+				}
+			});
+
+		}
+		//end code Delete Student
+
+
+		//Get admin added Standard data dynamically for student registration form
+		function standards() {
+			$.ajax({
+				url: "/getStandardsList-API",
+				type: 'POST',
+				success: function (data) {
+					var a = '<option value="" disabled selected> -- Select Option-- </option>';
+					var b = '';
+					for (i = 0; i < data.length; i++) {
+						a += '<option value="' + data[i] + '">' + data[i] + '</option>'
+						b += '<option value="' + data[i] + '">' + data[i] + '</option>'
+					}
+					$('#standards1').html(a)
+					$('#standards2').html(b)
+					//document.getElementById('leaveType').innerHTML=a;
+				},
+				error: function () {
+					alert("error show standatds....")
+				}
+			});
+		}
+		//Get admin added Standard data dynamically for student registration form
+
+
+		//Get admin added Medium data dynamically for student registration form
+		function medium() {
+			$.ajax({
+				url: "/getMediumList-API",
+				type: 'POST',
+				success: function (data) {
+					var a = '<option value="" disabled selected> -- Select Option-- </option>';
+					var b = '';
+					for (i = 0; i < data.length; i++) {
+						a += '<option value="' + data[i] + '">' + data[i] + '</option>'
+						b += '<option value="' + data[i] + '">' + data[i] + '</option>'
+					}
+					$('#medium1').html(a)
+					$('#medium2').html(b)
+					//document.getElementById('leaveType').innerHTML=a;
+				},
+				error: function () {
+					alert("error show medium....")
+				}
+			});
+		}
+		//Get admin added Medium data dynamically for student registration form
+
+
+		//Get admin added Divison data dynamically for student registration form
+		function divisions() {
+			$.ajax({
+				url: "/getDivisionList-API",
+				type: 'POST',
+				success: function (data) {
+					var a = '<option value="" disabled selected> -- Select Option-- </option>';
+					var b = '';
+					for (i = 0; i < data.length; i++) {
+						a += '<option value="' + data[i] + '">' + data[i] + '</option>'
+						b += '<option value="' + data[i] + '">' + data[i] + '</option>'
+					}
+					$('#classDiv1').html(a)
+					$('#classDiv2').html(b)
+					//document.getElementById('leaveType').innerHTML=a;
+				},
+				error: function () {
+					alert("error show medium....")
+				}
+			});
+		}
+		//Get admin added Medium data dynamically for student registration form
+
+
+		//Get admin added Total feed data dynamically for student registration form
+		function totalFees() {
+			$.ajax({
+				url: "/getTotalFeesList-API",
+				type: 'POST',
+				success: function (data) {
+					var a = '<option value="" disabled selected> -- Select Option-- </option>';
+					var b = '';
+					for (i = 0; i < data.length; i++) {
+						a += '<option value="' + data[i] + '">' + data[i] + '</option>'
+						b += '<option value="' + data[i] + '">' + data[i] + '</option>'
+					}
+					$('#totalFees1').html(a)
+					$('#totalFees2').html(b)
+
+					//document.getElementById('leaveType').innerHTML=a;
+
+				},
+				error: function () {
+					alert("error show medium....")
+				}
+			});
+		}
+		//Get admin added Standard data dynamically for student registration form
+	</script>
+	<!--Js Code End Here-->
+</body>
+
+</html>

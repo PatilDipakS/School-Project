@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>SALARYT SLIP</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+
+	<style>
+		@media print {
+			.no-print {
+				display: none !important;
+			}
+		}
+	</style>
+
+</head>
+
+<body onload="showTable();" class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header  text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h3><b>SALARYT SLIP</b></h3>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+
+								<div class="card-body text-light" style="background-color:#2596be;">
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Month</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+		<!--Salary Slip Start-->
+		<!--apply leave Staff Model Start-->
+		<div class="modal fade show" id="view">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-body">
+						<form id="save">
+							<div class="row">
+								<div class="col-md">
+									<!-- card-header -->
+									<div class="card">
+										<div class="card-body text-dark">
+											<div class="row">
+												<div class="col-md">
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<td class="text-center">
+																	<h4 class="text-center text-danger">
+																		<b>Ezio infotech Pvt Ltd</b>
+																	</h4><br>First Floor,
+																	Suvarndip, Sector 26, Plot No. 189, near Big India
+																	Chowk,<br> Nigdi,Pune, Maharashtra 411044
+																	</th>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div>
+														<span class="fw-bolder"><b>Name : </b>
+															<span id="staffName"></span>
+														</span>
+
+													</div>
+													<div> <span class="fw-bolder"><b>Staff ID :</b>
+															<span id="staffid"></span></span>
+													</div>
+													<div><span class="fw-bolder"><b>Designation :</b>
+															<span id="staffDesignation"></span></span>
+														</span>
+													</div>
+													<div><span class="fw-bolder"><b>Mode oF Payment:</b>
+															<span id="staffModePayment"></span></span>
+														</span> </div>
+												</div>
+												<div class="col-md-4">
+													<div> <span class="fw-bolder"><b>Work Day :</b>
+															<span id="staffWorkDay"></span></span>
+														</span>
+													</div>
+													<div> <span class="fw-bolder"><b>Absent Day :</b>
+															<span id="staffAbsentDay"></span></span>
+														</span>
+													</div>
+													<div> <span class="fw-bolder"><b>Salary Month:</b>
+															<span id="staffSalaryMonth"></span></span>
+														</span></div>
+													<div><span class="fw-bolder"><b>Payment Date:</b>
+															<span id="staffPaymentDate"></span>
+														</span>
+														</span>
+													</div>
+												</div>
+
+											</div>
+
+
+											<div class="row">
+
+												<table id="example1" class="mt-4 table table-bordered">
+													<thead class="text-dark">
+														<tr>
+															<th scope="col">Description</th>
+															<th scope="col">Earnings</th>
+															<th scope="col">Deductions</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Basic</td>
+															<td id="basic"></td>
+															<td>0</td>
+														</tr>
+														<tr>
+															<td>HRA</td>
+															<td id="hra"></td>
+															<td>0</td>
+														</tr>
+														<tr>
+															<td>Additional Allowance</th>
+															<td id="allowance"></td>
+															<td>0</td>
+														</tr>
+
+														<tr>
+															<td>Bonus</th>
+															<td id="bonus"></td>
+															<td>0</td>
+														</tr>
+
+														<tr>
+															<td>P.Tax</td>
+															<td>0</td>
+															<td id="ptax"></td>
+
+														</tr>
+														<tr>
+															<td>TDS</th>
+															<td>0</td>
+															<td>0</td>
+
+														</tr>
+
+														<tr class="border-top">
+															<th scope="row">Total</th>
+															<th id="totalEarn"></th>
+															<th id="totalDeduct"></th>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+											<div class="row">
+												<div class="col-md-4">
+													<span class="fw-bold">
+														<b>Net Pay :
+															<span id="netPay"></span> </b>
+
+													</span>
+												</div>
+
+											</div>
+											<div class="row d-flex justify-content-end">
+												<div class="d-flex flex-column mt-2"><span class="mt-4"><b>Authorised
+															Signatory</b></span>
+												</div>
+
+											</div>
+										</div>
+										<!-- /.card-body -->
+									</div>
+									<!-- /.card -->
+								</div>
+							</div>
+							<!-- /.Main content End -->
+						</form>
+
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--apply leave Staff Model End-->
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<!--Js Code start Here-->
+	<script>
+
+		//code for read the leave table value
+		function showTable() {
+
+			$.ajax({
+				url: "/showSalarySlip-API",
+				type: 'POST',
+
+				success: function (data) {
+					console.log(data)
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].month + '</td>' +
+							'<td > ' +
+							'<button id="' + data[i].month + '" type="button" onclick="viewSlip(this.id),slipData(this.id);" class=" btn btn-sm btn-warning fas fa-eye"  data-toggle="modal" data-target="#view" ></button>' + ' ' +
+							'<button  id="' + data[i].month + '" type="button" class=" btn btn-sm btn-warning fas fa-file-alt" onclick="printBtn(this.id);"></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+					$('#example1').DataTable({
+						"responsive": true, "lengthChange": true, "autoWidth": true,
+						"paging": false,
+						"lengthChange": true,
+						"searching": true,
+						"ordering": false,
+						"info": true,
+						"autoWidth": true,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+				},
+				error: function () {
+					alert("error show table....")
+				}
+			});
+		}
+
+
+		//Edit form button Code Start 
+		function viewSlip(id) {
+
+			$.ajax({
+				url: "/viewSlip-API",
+				type: 'POST',
+				data: {salaryMonth: id},
+
+				success: function (data) {
+					console.log(data)
+
+					$('#staffName').html(data.name);
+					$('#staffid').html(data.staffId);
+					$('#staffDesignation').html(data.designation);
+					$('#staffModePayment').html(data.modeOfPayment);
+					$('#staffWorkDay').html(data.workDay);
+					$('#staffAbsentDay').html(data.absentDay);
+					$('#staffSalaryMonth').html(data.salaryMonth);
+					$('#staffPaymentDate').html(data.salaryDate);
+
+				},
+				error: function () {
+					alert("error....")
+				}
+			});
+		}
+
+		function slipData(id) {
+
+			$.ajax({
+				url: "/slipData-API",
+				type: 'POST',
+				data: {salaryMonth: id},
+
+				success: function (data) {
+					console.log(data)
+
+					$('#basic').html(data.basic);
+					$('#hra').html(data.hra);
+					$('#bonus').html(data.bonus);
+					$('#allowance').html(data.additional);
+					$('#ptax').html(data.tax);
+					$('#totalEarn').html(data.totalEarn);
+					$('#totalDeduct').html(data.totalDeduct);
+					$('#netPay').html(data.netPay);
+
+				},
+				error: function () {
+					alert("error....")
+				}
+			});
+		}
+
+
+		function printBtn(id) {
+
+			$("#view").modal("show");
+			viewSlip(id);
+			slipData(id);
+			$("#view").modal("show");
+			window.print();
+			alert('calll')
+
+
+
+		}
+
+
+		// <!-- Page specific script -->
+
+
+
+	</script>
+
+</body>
+
+</html>

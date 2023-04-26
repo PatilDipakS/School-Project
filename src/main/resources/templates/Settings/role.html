@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>ROLE DETAILS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="showRoleDataTable();" class="hold-transition sidebar-mini layout-fixed"
+	data-panel-auto-height-mode="height">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header  text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">DataTables</li>
+							</ol>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<!-- card-header -->
+								<div class="card-header"  style="background-color:#2596be;">
+									<div class="card-title">
+										<select class="custom-select rounded-0" onchange="sendValue();" id="value">
+											<option disabled selected> ALL </option>
+											<option value="Role">Role</option>
+											<option value="Designation">Designation</option>
+											<option value="Leave Type">Leave Type</option>
+										</select>
+									</div>
+									<div align="right">
+										<button type="submit" class="btn btn-light" align="left"
+											data-toggle="modal" data-target="#role">ADD</button>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body"  style="background-color:#2596be;">
+									<table id="example1"class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Status</th>
+												<th class="table-active">Field</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+		<!--add Role Modal Start-->
+		<div class="modal fade" id="role">
+			<div class="modal-dialog">
+				<div class="modal-content" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header">
+						<h3 class="modal-title text-light text-center w-100"><b>ADD FIELD</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<!--/-modal header -->
+					</div>
+
+					<!-- modal-body-->
+					<div class="modal-body text-light">
+						<form>
+							<div class="form-group">
+								<label for="exampleInputID">Status</label>
+								<select class="custom-select rounded-0" id="roleStatus" name="status">
+									<option disabled selected> -- Select option -- </option>
+									<option>Role</option>
+									<option>Designation</option>
+									<option>Leave Type</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleSelectBorder">Field</label>
+								<input type="text" class="form-control" placeholder="Enter field here" id="roleField"
+									name="field" required>
+							</div>
+
+							<div class="modal-footer" align="right">
+								<button type="submit" onclick="saveRole();" class="btn btn-warning">Add</button>
+								<button type="Reset" class="btn btn-warning ">Reset</button>
+								<div class="float-left">
+									<button type="button" class="btn btn-warning">Close</button>
+								</div>
+							</div>
+						</form>
+
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--add Role Modal End-->
+
+
+		<!--edit Role Modal Start-->
+		<div class="modal fade" id="editModal">
+			<div class="modal-dialog">
+				<div class="modal-content" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header">
+						<h3 class="modal-title text-light text-center w-100"><b>EDIT FIELD</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<!--/-modal header -->
+					</div>
+
+					<!-- modal-body-->
+					<div class="modal-body text-light">
+						<form id="update">
+							<div class="form-group">
+								<label for="exampleInputID">Status</label>
+								<select class="custom-select rounded-0" id="roleStatus1" name="status">
+									<option>Role</option>
+									<option>Designation</option>
+									<option>Leave Type</option>
+
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleSelectBorder">Field</label>
+								<input type="text" class="form-control" placeholder="Enter field here" id="roleField1"
+									name="field" required>
+
+								<input type="hidden" class="form-control" placeholder="Enter field here" id="ids"
+									name="id" required>
+							</div>
+
+							<div class="modal-footer" align="right">
+								<button type="submit" class="btn btn-warning">Update</button>
+								<button type="Reset" class="btn btn-warning ">Reset</button>
+								<div class="float-left">
+									<button type="button" class="btn btn-warning">Close</button>
+								</div>
+							</div>
+						</form>
+
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--edit Role Modal End-->
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<!--Js Code start Here-->
+	<script>
+
+		//code for add role dyanamically by admin
+		function saveRole() {
+
+			var status = document.getElementById('roleStatus').value;
+
+			var field = document.getElementById('roleField').value;
+
+			//	alert("save ....." + status);
+			//	alert("save ....." + field);
+
+			$.ajax({
+				type: 'POST',
+				data: {status: status, field: field},
+				url: '/save-Role-API',
+				success: function (data) {
+
+					toastr.success('success')
+				},
+				error: function (data) {
+
+					alert("error.....");
+				}
+			});
+		};
+
+		//code for read the leave table value
+		function showRoleDataTable() {
+
+			$.ajax({
+				url: "/show-role-data-table-API",
+				type: 'POST',
+
+				success: function (data) {
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].status + '</td>' +
+							'<td > ' + data[i].field + '</td>' +
+							'<td > ' + '<button id="' + data[i].id + '" type="button" onclick="editRole(this.id);" class=" btn btn-sm btn-warning fas fa-edit"  data-toggle="modal" data-target="#editModal" ></button>' + ' ' +
+							'<button id="' + data[i].id + '" onclick="deleteRole(this.id);" type="button" class="btn btn-sm btn-danger far fa-trash-alt"></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+					$('#example1').DataTable({
+
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": true,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+				},
+				error: function () {
+					alert("error show table....")
+				}
+			});
+		}
+
+		//Get Value in Edit Role modal 
+
+
+		//Edit form button Code Start 
+		function editRole(id) {
+
+			//	alert(" edit function Callll...." + id);
+
+			$.ajax({
+				url: "/get-Data-Edit-Modal-API",
+				type: 'POST',
+				data: {id: id},
+
+				success: function (data) {
+					$('#ids').val(data.id);
+					$('#roleStatus1').val(data.status);
+					$('#roleField1').val(data.field);
+					//alert(" edit sueccess Callll...." + data.id);
+
+				},
+				error: function () {
+					alert("error edit function role modal...")
+				}
+			});
+		};
+
+		//Edit form button Code END
+
+
+
+		//Start Code update Role MOdal
+
+		$(document).on('submit', '#update', function () {
+			//	e.preventDefault();
+			//alert("kjvab......")
+			$.ajax({
+				url: "/update-data-Role-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+
+
+					//$('#edit-staff-Modal').modal('hide');
+					//showStaffDetails();
+
+				},
+				error: function () {
+					alert('error update.....');
+				}
+			});
+
+		});
+		//End code Update Role MOdal
+
+
+		//Edit form button Code Start 
+		function deleteRole(id) {
+
+			alert(" delete function Callll...." + id);
+
+			$.ajax({
+				url: "/delete-Role-Data-API",
+				type: 'POST',
+				data: {id: id},
+
+				success: function (data) {
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].status + '</td>' +
+							'<td > ' + data[i].field + '</td>' +
+							'<td > ' + '<button id="' + data[i].id + '" type="button" onclick="editRole(this.id);" class=" btn btn-sm btn-warning fas fa-edit"  data-toggle="modal" data-target="#editModal" ></button>' + ' ' +
+							'<button id="' + data[i].id + '" onclick="deleteRole(this.id);" type="button" class="btn btn-sm btn-danger far fa-trash-alt"></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+					showRoleDataTable();
+
+
+				}
+			});
+		}
+
+		//Edit form button Code END
+
+
+		// Start send the value for show only selected value data
+		function sendValue() {
+			var status = document.getElementById('value').value;
+			//	alert("hello....calll  " + status)
+			$.ajax({
+				url: "/send-value-API",
+				type: 'POST',
+				data: {status: status},
+
+				success: function (data) {
+					//	console.log(data)
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].status + '</td>' +
+							'<td > ' + data[i].field + '</td>' +
+							'<td > ' + '<button id="' + data[i].id + '" type="button" onclick="editRole(this.id);" class=" btn btn-sm btn-warning fas fa-edit"  data-toggle="modal" data-target="#editModal"></button>' + ' ' +
+							'<button id="' + data[i].id + '" onclick="deleteRole(this.id);" type="button" class="btn btn-sm btn-danger far fa-trash-alt"></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+				},
+				error: function () {
+					alert("error show table....")
+				}
+			});
+		}
+       //End send the value for show only selected value data
+	</script>
+
+</body>
+
+</html>

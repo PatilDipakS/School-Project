@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Salary Details</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="showMyTable();" class="hold-transition sidebar-mini">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h3><b>SALARY DETAILS</b></h3>
+
+						</div>
+<!--						<div class="col-sm-6">-->
+<!--							<ol class="breadcrumb float-sm-right">-->
+<!--								<li class="breadcrumb-item"><a href="#">Home</a></li>-->
+<!--								<li class="breadcrumb-item active">DataTables</li>-->
+<!--							</ol>-->
+<!--						</div>-->
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+
+							<div class="card">
+								<div class="card-body text-light" style="background-color:#2596be;">
+
+									<form>
+										<div class="row">
+<!--											<div class="form-group  col-md-2">-->
+<!--												<input type="date" id="dateTo" class="form-control"-->
+<!--													onchange="dateFilter();">-->
+<!--											</div>-->
+<!--											<div class="form-group col-md-2">-->
+<!--												<input type="date" id="dateFrom" class="form-control"-->
+<!--													onchange="dateFilter();">-->
+<!--											</div>-->
+<!--											<div class="input-group col-md-2">-->
+<!--												<select class="custom-select rounded-0" onchange="dateFilter();"-->
+<!--													id="myInput">-->
+<!--												</select>-->
+
+
+												<!--												<input class="form-control" type="search" id="myInput"-->
+												<!--													placeholder="Search name" aria-label="Search"-->
+												<!--													onchange="dateFilter();">-->
+<!--											</div>-->
+											<div class="form-group col-md-12" align="right">
+												<button type="save" id="dateFrom" class="btn btn-light"
+													onclick="salaryGenrate();">Genrate Salary</button>
+											</div>
+										</div>
+									</form>
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Staff Id</th>
+												<th class="table-active">Name</th>
+												<th class="table-active">Designation</th>
+												<th class="table-active">Month</th>
+												<th class="table-active">Working Day</th>
+												<th class="table-active">Absent Day</th>
+												<th class="table-active">Earning</th>
+												<th class="table-active">Deduction</th>
+												<th class="table-active">Professional Tax</th>
+												<th class="table-active">Bonus</th>
+												<th class="table-active">Gross Salary</th>
+												<th class="table-active">Net Salary</th>
+											</tr>
+										</thead>
+										<tbody id="myTable" class="table bg-white">
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<!--Js Code start Here-->
+
+	<script>
+
+		//Edit form button Code Start 
+		function showMyTable() {
+			$.ajax({
+				url: "/salary-Details-Data-API",
+				type: 'POST',
+				data: {},
+
+				success: function (data) {
+					console.log(data);
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+						d += '<tr>' +
+							'<td > ' + data[i].staffId + '</td>' +
+							'<td > ' + data[i].staffName + '</td>' +
+							'<td > ' + data[i].designation + '</td>' +
+							'<td > ' + data[i].month + '</td>' +
+							'<td > ' + data[i].workDay + '</td>' +
+							'<td > ' + data[i].absentDay + '</td>' +
+							'<td > ' + data[i].earn + '</td>' +
+							'<td > ' + data[i].deduct + '</td>' +
+							'<td > ' + data[i].tax + '</td>' +
+							'<td > ' + data[i].bonus + '</td>' +
+							'<td > ' + data[i].gross + '</td>' +
+							'<td > ' + data[i].net + '</td>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#myTable').html(d);
+					$('#example1').DataTable({
+
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": true,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+				}
+			});
+		}
+
+		function salaryGenrate() {
+
+			var currentDate = new Date();
+			var monthString = currentDate.toLocaleString('default', {month: 'long'});
+			$.ajax({
+				url: "/Salary-Deatils-API",
+				type: 'POST',
+				data: {month: monthString},
+
+				success: function (data) {
+
+					alert("genrate Succesfully......")
+					showMyTable();
+				},
+				error: function () {
+					alert("error genrate ......")
+				},
+			});
+		}
+
+		//genrate form button Code END
+
+	</script>
+	<!--Js Code End Here-->
+</body>
+
+</html>

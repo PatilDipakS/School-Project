@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Leave Details</title>
+	<!-- layout links insert using fragment-->
+	<!--	<div th:insert=admin/common/layout::links> -->
+	<div th:insert="~{admin/common/layout::links}">
+
+	</div>
+</head>
+
+<body onload="ShowLeaveTable(),buttons();" class="hold-transition sidebar-mini layout-fixed"
+	data-panel-auto-height-mode="height">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert="~{admin/common/layout::navbar}">
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert="~{admin/common/layout::sidebar}">
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6 text-danger">
+							<h3><b>LEAVE DETAILS</b></h3>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">DataTables</li>
+							</ol>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<!-- card-header -->
+							<div class="card" style="background-color:#2596be;">
+								<div class="card-header text-white">
+									<div class="card-title">
+									</div>
+									<div>
+										<a type="submit" class="btn btn-light" data-toggle="modal" id="getDataLeave"
+											data-target="#applyLeaveModal" onclick="showLeaveType();">APPLY LEAVE</a>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body text-white" style="background-color:#2596be;">
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Apply Date</th>
+												<th class="table-active">Form Date </th>
+												<th class="table-active">To Date</th>
+												<th class="table-active">Number Of Leave</th>
+												<th class="table-active">Leave type</th>
+												<th class="table-active">Reason</th>
+												<th class="table-active">Status</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+
+										</tbody>
+
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+
+		<!--apply leave Staff Model Start-->
+		<div class="modal fade" id="applyLeaveModal">
+			<div class="modal-dialog">
+				<div class="modal-content text-light" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header">
+						<h4 class="modal-title"><b>Leave Application<b></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<!--/-modal header -->
+					</div>
+
+					<!-- modal-body-->
+					<div class="modal-body">
+
+						<form id="save">
+							<div class="form-group">
+								<input type="hidden" class="form-control" placeholder="Staff ID"
+									th:value="${session.id}" name="staffId" readonly>
+
+								<label for="exampleInputID">Name</label>
+								<input type="text" class="form-control" placeholder="Enter Full Name"
+									th:value="${session.name}" name="name" readonly>
+							</div>
+
+							<!--							<div class="form-group">-->
+							<!--								<label for="exampleInputID">Apply Date</label>-->
+							<!--								<input type="date" class="form-control" placeholder="select date" name="applyDate"-->
+							<!--									required>-->
+							<!--							</div>-->
+
+							<div class="form-group">
+								<label for="exampleInputID">From Date</label>
+								<input type="date" class="form-control" placeholder="select from date" name="fromDate"
+									required>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputID">To Date</label>
+								<input type="date" class="form-control" placeholder="select to date" name="toDate"
+									required>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleSelectBorder">Leave type</label>
+								<select class="custom-select rounded-0" name="leaveType" id="leaveType">
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputID">Reason</label>
+								<textarea type="text" class="form-control" placeholder="Enter reason"
+									name="reason"></textarea>
+							</div>
+
+
+							<div class="modal-footer float-left">
+								<div>
+									<button type="button" class="btn btn-warning" data-dismiss="modal"
+										aria-label="Close">Close</button>
+								</div>
+							</div>
+
+							<div class="modal-footer " align="right">
+								<div>
+									<button type="submit" class="btn btn-warning">Apply</button>
+								</div>
+								<div>
+									<button type="Reset" class="btn btn-warning">Reset</button>
+								</div>
+							</div>
+						</form>
+
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--apply leave Staff Model End-->
+
+
+
+
+
+		<!-- Footer start -->
+		<div th:insert="~{admin/common/layout::footer}">
+		</div>
+		<!-- Footer end -->
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert="~{admin/common/layout::scripts}">
+	</div>
+
+
+	<!--Js Code start Here-->
+	<script>
+		//Save Leave Application data Code Start 
+		$(document).on('submit', '#save', function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: "/save-staff-leave-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+					$('#applyLeaveModal').modal('hide');
+					ShowLeaveTable();
+
+				},
+				error: function () {
+					alert("error leave.......")
+				}
+			});
+		});
+		//Save Leave Application data Code End
+
+
+		//Start Code for Show Staff leave Details Table
+		function ShowLeaveTable() {
+			$.ajax({
+				url: "/show-staff-Leave-table-API",
+				type: 'GET',
+
+				success: function (data) {
+					//console.log(data)
+					var d = '';
+					var status = "";
+					for (var i = 0; i < data.length; i++) {
+						/*
+												if (data[i].status == 'Rejected') {
+													status = '<td class="lead-tag" style="color:red"><b>' + data[i].status + '</b></td>'
+												} else if (data[i].status == 'Pending') {
+													status = '<td class="lead-tag" style="color:#ffcc00"><b>' + data[i].status + '</b></td>'
+												} else if (data[i].status == 'Approved') {
+													status = '<td class="lead-tag" style="color:green"><b>' + data[i].status + '</b></td>'
+												}
+												else {
+													status = '<td>' + ' ' + '</td>'
+												}
+						*/
+						d += '<tr>' +
+							'<td > ' + data[i].applyDate + '</td>' +
+							'<td > ' + data[i].fromDate + '</td>' +
+							'<td > ' + data[i].toDate + '</td>' +
+							'<td > ' + data[i].numLeave + '</td>' +
+							'<td > ' + data[i].leaveType + '</td>' +
+							'<td > ' + data[i].reason + '</td>' +
+							'<td > ' + data[i].status + '</td>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d);
+					$('#example1').DataTable({
+
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": true,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+				},
+				error: function () {
+					alert("error show tabale....")
+				}
+			});
+		}
+		//End Code for Show Staff leave Details Table
+
+
+		//Start code for get Leave type data
+		function showLeaveType() {
+			$.ajax({
+				url: "/showLeaveType-API",
+				type: 'GET',
+				data: {},
+
+				success: function (data) {
+					var a = '<option value="" disabled selected> -- Select Type-- </option>';
+
+					for (i = 0; i < data.length; i++) {
+						a += '<option value="' + data[i].field + '">' + data[i].field + '</option>'
+						
+					}
+					$('#leaveType').html(a)
+
+					//document.getElementById('leaveType').innerHTML=a;
+
+				},
+				error: function () {
+					alert("error show leave type....")
+				}
+			});
+		}
+			//end code for get Leave type data
+
+	</script>
+	<!--Js Code End Here-->
+
+</body>
+
+</html>

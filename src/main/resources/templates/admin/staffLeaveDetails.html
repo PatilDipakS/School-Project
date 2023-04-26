@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>STAFF LEAVE DETAILS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="ShowStaffLeaveTable();" class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6 text-danger">
+							<h3><b>STAFF LEAVE DETAILS</b></h3>
+						</div>
+					
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<!-- card-header -->
+							<div class="card">
+								<div class="card-body text-white" style="background-color:#2596be;">
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Staff Id</th>
+												<th class="table-active">Name</th>
+												<th class="table-active">Apply Date</th>
+												<th class="table-active">From Date</th>
+												<th class="table-active">To Date</th>
+												<th class="table-active">Number of Leave</th>
+												<th class="table-active">Reason</th>
+												<th class="table-active">Status</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="mytable" class="table bg-white">
+
+										</tbody>
+
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<!--Js Code start Here-->
+	<script>
+		//Start Code for Show Staff leave Details Table
+		function ShowStaffLeaveTable() {
+			$.ajax({
+				url: "/show-staff-Leave-Details",
+				type: 'POST',
+
+				success: function (data) {
+					//console.log(data)
+					var d = '';
+					for (var i = 0; i < data.length; i++) {
+
+						/*if (data[i].status == 'Rejected') {
+							status = '<td class="lead-tag" style="color:red"><b>' + data[i].status + '</b></td>'
+						} else if (data[i].status == 'Pending') {
+							status = '<td class="lead-tag" style="color:#ffcc00"><b>' + data[i].status + '</b></td>'
+						} else if (data[i].status == 'Approved') {
+							status = '<td class="lead-tag" style="color:#ffcc00"><b>' + data[i].status + '</b></td>'
+						}
+						else {
+							status = '<td>' + ' ' + '</td>'
+						}*/
+
+						d += '<tr>' +
+							'<td > ' + data[i].staffId + '</td>' +
+							'<td > ' + data[i].name + '</td>' +
+							'<td > ' + data[i].applyDate + '</td>' +
+							'<td > ' + data[i].fromDate + '</td>' +
+							'<td > ' + data[i].toDate + '</td>' +
+							'<td > ' + data[i].numLeave + '</td>' +
+							'<td > ' + data[i].reason + '</td>' +
+							'<td > ' + data[i].status + '</td>' +
+							'<td > ' + '<button type="button" onclick=updateLeaveStatus(' + data[i].id + ',"Approved")  class="btn  btn-sm btn-warning fas fa-check-square"></button>' + ' ' +
+							'<button type="button"  onclick=updateLeaveStatus(' + data[i].id + ',"Rejected") class="btn btn-sm btn-danger fas fa-window-close "></button>' +
+							'</td > ' +
+							'</tr >'
+					}
+					$('#mytable').html(d); $('#example1').DataTable({
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": false,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+				},
+				error: function () {
+					alert("error show tabale....")
+				}
+			});
+		}
+		//End Code for  Show Staff leave Details Table
+
+		// code for  Approved  and rejected Leave and update leave details admin table
+		function updateLeaveStatus(id, status) {
+			//	alert(id+"   "+status)
+			$.ajax({
+				url: "/approved-leave",
+				type: 'POST',
+				data: {id: id, status: status},
+
+				success: function (data) {
+					ShowStaffLeaveTable();
+				},
+				error: function () {
+					alert(" Error............." )
+				}
+			});
+
+		};
+	</script>
+	<!--Js Code End Here-->
+
+</body>
+
+</html>

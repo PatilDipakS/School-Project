@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>STANDARDS</title>
+	<!-- layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::links}>
+	</div>
+</head>
+
+<body onload="showTable();" class="hold-transition sidebar-mini" data-panel-auto-height-mode="height">
+	<div class="wrapper">
+
+		<!-- start nav bar-->
+		<div th:insert=~{admin/common/layout::navbar}>
+		</div>
+		<!-- end nav bar-->
+
+		<!-- start side bar insert-->
+		<div th:insert=~{admin/common/layout::sidebar}>
+		</div>
+		<!-- end side bar-->
+
+		<!-- Contains page start -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header text-danger">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">DataTables</li>
+							</ol>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<!-- card-header -->
+								<div class="card-header " style="background-color:#2596be;">
+									<div class="card-title">
+										<select class="custom-select rounded-0" onchange="searchStandard();"
+											id="search">
+										</select>
+									</div>
+									<div align="right">
+										<button type="submit" class="btn btn-light" align="left" data-toggle="modal"
+											data-target="#add">ADD</button>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body " style="background-color:#2596be;">
+
+									<table id="example1" class="table table-bordered table-hover">
+										<thead class="table bg-white">
+											<tr>
+												<th class="table-active">Standards</th>
+												<th class="table-active">Medium</th>
+												<th class="table-active">Division</th>
+												<th class="table-active">Fees</th>
+												<th class="table-active">Action</th>
+											</tr>
+										</thead>
+										<tbody id="myTable" class="table bg-white">
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.Main content End -->
+		</div>
+		<!-- Contains page end -->
+
+		<!--add Role Modal Start-->
+		<div class="modal fade" id="add">
+			<div class="modal-dialog">
+				<div class="modal-content text-light" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header ">
+						<h3 class="modal-title text-center w-100"><b> ADD STANDARDS</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<!--/-modal header -->
+					</div>
+
+					<!-- modal-body-->
+					<div class="modal-body">
+						<form id="add">
+							<div class="form-group">
+								<label for="exampleInputID">Standards</label>
+								<input type="text" class="form-control" placeholder="Enter Standards here"
+									name="standards" required>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputID">Medium</label>
+								<input type="text" class="form-control" placeholder="Enter medium here" name="medium" required>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputID">Division</label>
+								<input type="text" class="form-control" placeholder="Enter division here" name="division"
+									required>
+							</div>
+							
+							<div class="form-group">
+								<label for="exampleInputID">Fess</label>
+								<input type="text" class="form-control" placeholder="Enter fess here" name="fees" required>
+							</div>
+
+							<div class="modal-footer" align="right">
+								<button type="submit" class="btn btn-warning">Save</button>
+								<button type="Reset" class="btn btn-warning ">Reset</button>
+								<div class="float-left">
+									<button type="button" class="btn btn-warning">Close</button>
+								</div>
+							</div>
+						</form>
+
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--add Role Modal End-->
+
+
+
+		<!--Edit Role Modal Start-->
+		<div class="modal fade" id="edit">
+			<div class="modal-dialog">
+				<div class="modal-content text-light" style="background-color:#2596be;">
+					<!--modal header -->
+					<div class="modal-header ">
+						<h3 class="modal-title text-center w-100"><b>EDIT STANDARDS</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<!--/-modal header -->
+					</div>
+
+					<!-- modal-body-->
+					<div class="modal-body">
+						<form id="update">
+							<div class="form-group">
+								<label for="exampleInputID">Standards</label>
+								<input type="text" class="form-control" placeholder="Enter Standards here"
+									name="standards" id="standards" required>
+								<input type="hidden" class="form-control" placeholder="Enter Standards here" name="id"
+									id="ids" required>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputID">Medium</label>
+								<input type="text" class="form-control" placeholder="Enter medium here" name="medium"
+									id="medium" required>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputID">Division</label>
+								<input type="text" class="form-control" placeholder="Enter division here" name="division"
+									id="division" required>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputID">Fess</label>
+								<input type="text" class="form-control" placeholder="Enter fess here" name="fees" id="fees"
+									required>
+							</div>
+
+							<div class="modal-footer" align="right">
+								<button type="submit" class="btn btn-warning">Update</button>
+								<button type="Reset" class="btn btn-warning ">Reset</button>
+								<div class="float-left">
+									<button type="button" class="btn btn-warning">Close</button>
+								</div>
+							</div>
+						</form>
+
+						<!-- /.modal-body-->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!--add Role Modal End-->
+
+
+		<!-- Footer start -->
+		<div th:insert=~{admin/common/layout::footer}>
+		</div>
+		<!-- Footer end -->
+	</div>
+
+	<!--layout links insert using fragment-->
+	<div th:insert=~{admin/common/layout::scripts}>
+	</div>
+
+	<!--Js Code start Here-->
+
+	<script>
+
+		//start code save Standards
+		$(document).on('submit', '#add', function (e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: "/add-Standards-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+
+					$('#add').modal('hide');
+					showTable();
+
+				},
+				error: function () {
+					alert('error .....');
+				}
+			});
+
+		});
+		//End code save Standards
+
+
+		//show table data
+		function showTable() {
+			$.ajax({
+				url: "/show-Standards-table-API",
+				method: 'POST',
+				data: {},
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+					var a = "";
+					for (var i = 0; i < data.length; i++) {
+						a += '<tr>' +
+							'<td>' + data[i].standards + '</td>' +
+							'<td>' + data[i].medium + '</td>' +
+							'<td>' + data[i].division + '</td>' +
+							'<td>' + data[i].fees + '</td>' +
+							'<td>' + '<button id="' + data[i].id + '" type="button" onclick="edit(this.id);" class=" btn btn-sm btn-warning fas fa-edit"  data-toggle="modal" data-target="#edit" ></button>' + ' ' +
+							'<button id="' + data[i].id + '" onclick="deleteFun(this.id);" type="button" class="btn btn-sm btn-danger far fa-trash-alt"></button>' +
+							'</td > ' +
+							'</tr>'
+					}
+					$('#myTable').html(a);
+					$('#example1').DataTable({
+
+						"responsive": true, "lengthChange": false, "autoWidth": false,
+						"buttons": ["excel", "pdf", "print", "colvis"],
+
+						"paging": true,
+						"lengthChange": false,
+						"searching": true,
+						"ordering": true,
+						"info": true,
+						"autoWidth": false,
+						"responsive": true,
+					}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+					getStandard();
+				},
+				error: function () {
+					alert('error .....');
+				}
+			});
+		}
+		//End show table data
+
+
+
+		//Edit form button Code Start 
+		function edit(id) {
+
+			$.ajax({
+				url: "/get-standard-data-API",
+				type: 'POST',
+				data: {id: id},
+
+				success: function (data) {
+					$('#ids').val(data.id);
+					$('#standards').val(data.standards);
+					$('#medium').val(data.medium);
+					$('#division').val(data.division);
+					$('#fees').val(data.fees);
+
+				},
+				error: function () {
+					alert("error edit function role modal...")
+				}
+			});
+
+
+		};
+		//Edit form button Code END
+
+
+
+		//start code update Standards
+		$(document).on('submit', '#update', function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: "/update-Standards-API",
+				method: 'POST',
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				cache: false,
+
+				success: function (data) {
+
+					$('#edit').modal('hide');
+					showTable();
+
+				},
+				error: function () {
+					alert('error .....');
+				}
+			});
+
+		});
+		//End code update Standards
+
+
+
+		//Edit form button Code Start 
+		function deleteFun(id) {
+
+			$.ajax({
+				url: "/delete-standard-data-API",
+				type: 'POST',
+				data: {id: id},
+
+				success: function (data) {
+					showTable();
+
+				},
+				error: function () {
+					alert("error edit function role modal...")
+				}
+			});
+
+
+		};
+		//Edit form button Code END
+
+
+		//show Standard list on selector 
+		function getStandard() {
+
+			$.ajax({
+				url: "/getStandardsList-API",
+				type: 'POST',
+				data: {},
+
+				success: function (data) {
+					var a = '<option value="" disabled selected> selected Standards</option>';
+					var b = '';
+					for (i = 0; i < data.length; i++) {
+						a += '<option value="' + data[i] + '">' + data[i] + '</option>'
+					}
+					$('#search').html(a)
+				},
+				error: function () {
+					alert("error show role....")
+				}
+			});
+		}
+		//show Standard list on selector 
+		function searchStandard() {
+			var search = document.getElementById('search').value;
+			$.ajax({
+				url: "/search-standard-data-API",
+				type: 'POST',
+				data: {search: search},
+
+				success: function (data) {
+					var a = "";
+					for (var i = 0; i < data.length; i++) {
+						a += '<tr>' +
+							'<td>' + data[i].standards + '</td>' +
+							'<td>' + data[i].medium + '</td>' +
+							'<td>' + data[i].division + '</td>' +
+							'<td>' + data[i].fees + '</td>' +
+							'<td>' + '<button id="' + data[i].id + '" type="button" onclick="edit(this.id);" class=" btn btn-sm btn-outline-secondary fas fa-edit"  data-toggle="modal" data-target="#edit" ></button>' + ' ' +
+							'<button id="' + data[i].id + '" onclick="deleteFun(this.id);" type="button" class="btn btn-sm btn-outline-secondary far fa-trash-alt"></button>' +
+							'</td > ' +
+							'</tr>'
+					}
+					$('#myTable').html(a);
+					getStandard();
+
+				},
+				error: function () {
+					alert("error  function search...")
+				}
+			});
+
+		}
+		//show Standard list on selector
+
+
+
+
+	</script>
+	<!--Js Code End Here-->
+</body>
+
+</html>
